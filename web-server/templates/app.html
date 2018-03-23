@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction</title>
+</head>
+<body>
+<form method="post">
+    Input a question:<br>
+    <textarea name="question" rows=10 cols=100></textarea>
+    <input type="submit" value="Ask">
+</form>
+
+{% if result %}
+  <h1>Result:</h1>
+  <p>{{ result }}</p>
+{% endif %}
+</body>
+</html>
