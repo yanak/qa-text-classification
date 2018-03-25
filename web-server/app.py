@@ -53,7 +53,7 @@ def predict(text):
         		questions.append(columns)
 
     # drop the first column
-	sub_texts = []
+	sub_questions = []
 	for t in questions:
 		columns = []
 		columns.append(filter(t[0]))
@@ -61,10 +61,10 @@ def predict(text):
 		columns.append(t[2])
 		
 		if len(filter(t[0])) > 0:
-			sub_texts.append(columns)
+			sub_questions.append(columns)
 
     # drop colum names
-	sub_texts.pop(0)
+	sub_questions.pop(0)
 
     # Create samples and labels
 	labels = []
@@ -73,7 +73,7 @@ def predict(text):
 	cnt1 = 0
 	cnt2 = 0
 	cnt3 = 0
-	for i, row in enumerate(sub_texts):
+	for i, row in enumerate(sub_questions):
 	    if 'Account' in row[2]:
 	        if cnt2 < threashold:
 	            cnt2 += 1
@@ -103,7 +103,9 @@ def predict(text):
 	padded_seq = pad_sequences(seq, maxlen=maxlen)
 
     # predict
-    model = load_model('../pre_trained_cs_model.h5')
+    model = load_model('../pre_trained_model.h5')
     res = model.predict([padded_seq])
+
+    prediction_texts = ['unknown', 'other', 'account', 'payment']
     
-    return np.argmax(res[0])
+    return 'The category is %s!' % prediction_texts[np.argmax(res[0])]
